@@ -1,0 +1,16 @@
+<!-- video-streaming.component.html -->
+<div>
+    <video #videoElement width="640" height="480" autoplay></video>
+  </div>
+  <div>
+    <button (click)="startVideo()">Start Camera</button>
+    <button (click)="stopVideo()">Stop Camera</button>
+  </div>
+  
+  <div>
+    <h2>Output Video</h2>
+    <div>
+      <img [src]="outputImageData" alt="Output Video">
+    </div>
+  </div>
+  
