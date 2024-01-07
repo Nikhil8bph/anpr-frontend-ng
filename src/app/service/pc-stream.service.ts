@@ -10,6 +10,7 @@ import { Socket } from 'ngx-socket-io';
 export class PcStreamService { 
   private mediaStream: MediaStream;
   private selectedDeviceId: string;
+  private selectedFrameRate: number = 5;
   constructor(private socket: Socket) { }
 
   getAvailableCameras(): Promise<MediaDeviceInfo[]> {
@@ -18,12 +19,14 @@ export class PcStreamService {
   }
 
   startStreaming(videoElement: HTMLVideoElement): Observable<string> {
+    this.socket.connect();
     const constraints: MediaStreamConstraints = {
       video: {
-        deviceId: this.selectedDeviceId ? { exact: this.selectedDeviceId } : undefined
+        deviceId: this.selectedDeviceId ? { exact: this.selectedDeviceId } : undefined,
+        frameRate: { ideal: this.selectedFrameRate, max: this.selectedFrameRate}
       }
     };
-    
+    console.log(constraints)
     return new Observable<string>(observer => {
       navigator.mediaDevices.getUserMedia(constraints)
         .then(stream => {
@@ -76,5 +79,13 @@ export class PcStreamService {
 
   setSelectedCamera(deviceId: string) {
     this.selectedDeviceId = deviceId;
+  }
+
+  setFrameRate(selectedFrameRate: number) {
+    this.selectedFrameRate = selectedFrameRate;
+  }
+
+  getFrameRate() {
+    return this.selectedFrameRate;
   }
 }

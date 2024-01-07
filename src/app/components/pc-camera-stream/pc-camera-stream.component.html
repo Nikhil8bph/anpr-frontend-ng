@@ -2,21 +2,30 @@
 <div>
     <label for="cameraSelector">Select Camera:</label>
     <select id="cameraSelector" [(ngModel)]="selectedCameraId">
-      <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">{{ camera.label }}</option>
+        <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">{{ camera.label }}</option>
     </select>
-  </div>
+</div>
 <div>
+    <label for="frameRate">Select Frame Rate:</label>
+    <select #frameRateSelect id="frameRate" (change)="updateFrameRate()">
+        <option value="5">5 FPS</option>
+        <option value="10">10 FPS</option>
+        <option value="15">15 FPS</option>
+        <option value="20">20 FPS</option>
+        <!-- Add more options as needed -->
+    </select>
+</div>
+<div>
+    <h2>Input Video</h2>
     <video #videoElement width="640" height="480" autoplay></video>
-  </div>
-  <div>
+</div>
+<div>
     <button (click)="startVideo()">Start Camera</button>
     <button (click)="stopVideo()">Stop Camera</button>
-  </div>
-  
-  <div>
+</div>
+<div>
     <h2>Output Video</h2>
     <div>
-      <img [src]="outputImageData" alt="Output Video">
+        <img [src]="outputImageData" alt="Output Video">
     </div>
-  </div>
-  
+</div>
