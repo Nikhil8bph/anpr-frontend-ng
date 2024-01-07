@@ -1,5 +1,11 @@
 <!-- video-streaming.component.html -->
 <div>
+    <label for="cameraSelector">Select Camera:</label>
+    <select id="cameraSelector" [(ngModel)]="selectedCameraId">
+      <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">{{ camera.label }}</option>
+    </select>
+  </div>
+<div>
     <video #videoElement width="640" height="480" autoplay></video>
   </div>
   <div>

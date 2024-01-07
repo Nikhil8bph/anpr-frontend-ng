@@ -9,13 +9,20 @@ import { PcStreamService } from 'src/app/service/pc-stream.service';
 })
 export class PcCameraStreamComponent implements OnInit {
   @ViewChild('videoElement') videoElement: ElementRef;
-  videoStream: MediaStream;
   outputImageData: string;
+  availableCameras: MediaDeviceInfo[] = [];
+  selectedCameraId: string = '';
 
   constructor(private videoStreamingService: PcStreamService) { }
 
   ngOnInit() {
     // Don't start video streaming automatically on component initialization
+    this.videoStreamingService.getAvailableCameras().then(devices => {
+      this.availableCameras = devices;
+      if (devices.length > 0) {
+        this.selectedCameraId = devices[0].deviceId; // Select the first camera by default
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -23,6 +30,8 @@ export class PcCameraStreamComponent implements OnInit {
   }
 
   startVideo() {
+    this.videoStreamingService.setSelectedCamera(this.selectedCameraId);
+    console.log(this.selectedCameraId)
     this.videoStreamingService.startStreaming(this.videoElement.nativeElement)
       .subscribe(imageData => {
         this.outputImageData = imageData;
