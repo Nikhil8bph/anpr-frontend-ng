@@ -9,6 +9,8 @@ import { IpCameraStreamComponent } from './components/ip-camera-stream/ip-camera
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/', options: {} };
 
@@ -17,7 +19,9 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/', options: {} };
     AppComponent,
     PcCameraStreamComponent,
     IpCameraStreamComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

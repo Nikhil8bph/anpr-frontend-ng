@@ -11,6 +11,7 @@ export class PcStreamService {
   private mediaStream: MediaStream;
   private selectedDeviceId: string;
   private selectedFrameRate: number = 5;
+  myArray: string[] = ['string1', 'string2'];
   constructor(private socket: Socket) { }
 
   getAvailableCameras(): Promise<MediaDeviceInfo[]> {
@@ -18,7 +19,7 @@ export class PcStreamService {
       .then(devices => devices.filter(device => device.kind === 'videoinput'));
   }
 
-  startStreaming(videoElement: HTMLVideoElement): Observable<string> {
+  startStreaming(videoElement: HTMLVideoElement): Observable<string[]> {
     this.socket.connect();
     const constraints: MediaStreamConstraints = {
       video: {
@@ -27,7 +28,7 @@ export class PcStreamService {
       }
     };
     console.log(constraints)
-    return new Observable<string>(observer => {
+    return new Observable<string[]>(observer => {
       navigator.mediaDevices.getUserMedia(constraints)
         .then(stream => {
           this.mediaStream = stream;
@@ -46,9 +47,12 @@ export class PcStreamService {
           }
 
           setInterval(captureFrame, 100);
-
-          this.socket.on('video_feed', (imageData: string) => {
-            observer.next(imageData);
+          const myArrayNull = Array(2).fill(null);
+          this.socket.on('video_feed', (imageDataArray: string[]) => {
+            myArrayNull.forEach((_, index) => {
+              myArrayNull[index] = imageDataArray[index] || null;
+            });
+            observer.next(myArrayNull);
           });
         })
         .catch(error => {

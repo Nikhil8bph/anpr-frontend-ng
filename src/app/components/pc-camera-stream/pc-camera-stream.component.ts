@@ -10,7 +10,8 @@ import { PcStreamService } from 'src/app/service/pc-stream.service';
 export class PcCameraStreamComponent implements OnInit {
   @ViewChild('videoElement') videoElement: ElementRef;
   @ViewChild('frameRateSelect') frameRateSelect: ElementRef;
-  outputImageData: string;
+  outputImageData1: string;
+  outputImageData2: string;
   availableCameras: MediaDeviceInfo[] = [];
   selectedCameraId: string = '';
 
@@ -35,13 +36,15 @@ export class PcCameraStreamComponent implements OnInit {
     console.log(this.selectedCameraId)
     this.videoStreamingService.startStreaming(this.videoElement.nativeElement)
       .subscribe(imageData => {
-        this.outputImageData = imageData;
+        this.outputImageData1 = imageData[0];
+        this.outputImageData2 = imageData[1];
       });
   }
 
   stopVideo() {
     this.videoStreamingService.stopStreaming(this.videoElement.nativeElement);
-    this.outputImageData = null; // Clear the output video when stopping
+    this.outputImageData1 = null; // Clear the output video when stopping
+    this.outputImageData2 = null;
   }
 
   updateFrameRate() {
