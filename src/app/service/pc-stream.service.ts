@@ -3,15 +3,18 @@ import { environment } from 'src/environments/environment';
 import { Observable, EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PcStreamService { 
+export class PcStreamService {
+  
   private mediaStream: MediaStream;
   private selectedDeviceId: string;
   private selectedFrameRate: number = 5;
-  constructor(private socket: Socket) { }
+  private baseUrl = environment.backend;
+  constructor(private socket: Socket, private httpClient: HttpClient) { }
 
   getAvailableCameras(): Promise<MediaDeviceInfo[]> {
     return navigator.mediaDevices.enumerateDevices()
@@ -64,7 +67,6 @@ export class PcStreamService {
   }
 
   stopStreaming(videoElement: HTMLVideoElement) {
-    console.log('Before stopping:', this.mediaStream);
     // Stop the media stream
     if (this.mediaStream) {
       this.mediaStream.getTracks().forEach(track => track.stop());
@@ -72,7 +74,6 @@ export class PcStreamService {
       // Clear the video element
       videoElement.srcObject = null;
     }
-    console.log('After stopping:', this.mediaStream);
     // Disconnect from the socket
     this.socket.disconnect();
   }
@@ -88,4 +89,8 @@ export class PcStreamService {
   getFrameRate() {
     return this.selectedFrameRate;
   }
+
+  setPcAnpr() {
+    return this.httpClient.post(`${this.baseUrl}/initialize`, 'initialize' ,{ responseType: 'text' });
+  } 
 }

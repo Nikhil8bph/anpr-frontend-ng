@@ -1,31 +1,45 @@
 <!-- video-streaming.component.html -->
-<div>
-    <label for="cameraSelector">Select Camera:</label>
-    <select id="cameraSelector" [(ngModel)]="selectedCameraId">
-        <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">{{ camera.label }}</option>
-    </select>
-</div>
-<div>
-    <label for="frameRate">Select Frame Rate:</label>
-    <select #frameRateSelect id="frameRate" (change)="updateFrameRate()">
-        <option value="5">5 FPS</option>
-        <option value="10">10 FPS</option>
-        <option value="15">15 FPS</option>
-        <option value="20">20 FPS</option>
-        <!-- Add more options as needed -->
-    </select>
-</div>
-<div>
-    <h2>Input Video</h2>
-    <video #videoElement width="640" height="480" autoplay></video>
-</div>
-<div>
-    <button (click)="startVideo()">Start Camera</button>
-    <button (click)="stopVideo()">Stop Camera</button>
-</div>
-<div>
-    <h2>Output Video</h2>
-    <div>
-        <img [src]="outputImageData" alt="Output Video">
+<div class="container mt-3">
+    <h5>PC Camera Settings</h5>
+    <div class="row">
+        <div class="col-4 input-group">
+            <label for="cameraSelector" class="input-group-text">Select Camera</label>
+            <select id="cameraSelector" class="form-select" name="cameraSelector" [(ngModel)]="selectedCameraId">
+                <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">{{ camera.label }}</option>
+            </select>
+            <label for="frameRate" class="input-group-text">Select Frame Rate:</label>
+            <select #frameRateSelect id="frameRate" class="form-select" name="frameRate" (change)="updateFrameRate()">
+                <option value="2">2 FPS</option>
+                <option value="5">5 FPS</option>
+                <option value="10">10 FPS</option>
+                <option value="15">15 FPS</option>
+                <option value="20">20 FPS</option>
+                <!-- Add more options as needed -->
+            </select>
+            <button (click)="startVideo()" class="btn btn-success">Start Camera</button>
+            <button (click)="stopVideo()" class="btn btn-danger">Stop Camera</button>
+        </div>
     </div>
+</div>
+<div class="container mt-3 mb-3">
+    <div class="row">
+    <div class = "col-4 border">
+        <div class="row">
+            <h6>Input Video</h6>
+            <video #videoElement width="400" height="224"style="margin-top: 0rem;"  autoplay></video>
+        </div>
+        <div class="row">
+            <h6>Output Video</h6>
+            <img [src]="outputImageData" width="400" height="224" style="margin-top: 0rem;" alt="Output Video">
+        </div>
+    </div>
+    <div class = "col-8 border">
+        <div class="row">
+            
+        </div>
+        <div class="row">
+            
+        </div>
+    </div>
+</div>
 </div>

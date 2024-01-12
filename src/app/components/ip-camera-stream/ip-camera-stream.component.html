@@ -1,1 +1,41 @@
-<p>ip-camera-stream works!</p>
+<div class="container mt-3">
+    <h5>IP Camera Settings</h5>
+    <div class="row">
+        <div class="col-4 input-group">
+            <label for="videoSource" class="input-group-text">Add IP Address / Video Source</label>
+            <input id="videoSource" class="form-input" name="videoSource" [(ngModel)]="videoSource">
+            <label for="frameRate" class="input-group-text">Select Frame Rate:</label>
+            <select id="frameRate" class="form-select" name="frameRate" [(ngModel)]="frameRateSelect">
+                <option value="2">2 FPS</option>
+                <option value="5">5 FPS</option>
+                <option value="10">10 FPS</option>
+                <option value="15">15 FPS</option>
+                <option value="20">20 FPS</option>
+                <!-- Add more options as needed -->
+            </select>
+            <button (click)="startVideo()" class="btn btn-success">Start Camera</button>
+            <button (click)="stopVideo()" class="btn btn-danger">Stop Camera</button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class = "col-4 border">
+            <div class="row">
+                <h6>Output Video</h6>
+                <img [src]="outputImageData" width="400" height="224" style="margin-top: 0rem;" alt="Output Video">
+            </div>
+            <div class="row">
+                
+            </div>
+        </div>
+    <div class = "col-8 border">
+        <div class="row">
+            
+        </div>
+        <div class="row">
+            
+        </div>
+    </div>
+</div>
